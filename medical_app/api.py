@@ -39,11 +39,13 @@ import threading
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Request
+from fastapi.responses import JSONResponse
 
 from medical_app.config import settings
 from medical_app.index import INDEXED_FIELDS
 from medical_app.loader import LoaderError
+from medical_app.logging_config import setup_logging
 from medical_app.models import MedicalEntry
 from medical_app.schemas import (
     EntriesListResponse,
@@ -113,14 +115,20 @@ def _run_scheduler(
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     """Build the live index at startup and start the daily-refresh scheduler.
 
-    Two things happen at startup:
+    Three things happen at startup:
 
-    1. **Initial build**: call :func:`build_and_swap` to load
+    1. **Logging**: call :func:`setup_logging` so logs emitted during the build
+       (and beyond) are formatted consistently. Idempotent, so the (also
+       idempotent) call in ``main()`` is harmless.
+    2. **Initial build**: call :func:`build_and_swap` to load
        ``settings.data_path``, build a :class:`SearchIndex`, and atomically
-       publish it as the live snapshot. A startup build failure propagates
-       (feat-007 will add keep-last-good wiring for startup; for feat-006 the
-       app fails fast rather than serving an empty dataset silently).
-    2. **Scheduler**: if ``settings.refresh_interval_seconds > 0``, start a
+       publish it as the live snapshot. **Resilient on failure** (feat-007): if
+       the initial build raises, the app does NOT crash — the error is logged
+       loudly and the live snapshot stays at its empty startup placeholder
+       (``entry_count == 0``), so ``/health`` still reports liveness and the
+       scheduler can retry on its next tick. This matches the spec's "keep
+       serving ... and log the error rather than crashing."
+    3. **Scheduler**: if ``settings.refresh_interval_seconds > 0``, start a
        daemon thread that calls :func:`build_and_swap` roughly every interval.
        The scheduler swallows per-reload errors so the thread stays alive.
 
@@ -132,16 +140,30 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
         Nothing; control returns to FastAPI to run the app, then the context
         exits on shutdown.
     """
+    # Configure logging FIRST so the startup build logs are formatted. Idempotent.
+    setup_logging()
+
     data_path = str(settings.data_path)
 
-    # Initial build — publish the first live snapshot atomically.
+    # Initial build — publish the first live snapshot atomically. Resilient: a
+    # startup build failure (missing/bad dump) does NOT crash the app; we log
+    # loudly and keep serving the empty startup placeholder so /health stays up
+    # and the scheduler can retry. This is the cold-start counterpart of the
+    # scheduler's own "don't crash on a bad reload" behavior.
     logger.info("Building search index from %s", data_path)
-    snapshot = build_and_swap(data_path)
-    logger.info(
-        "Index ready: %d entries built at %s",
-        len(snapshot.entries),
-        snapshot.built_at.isoformat(),
-    )
+    try:
+        snapshot = build_and_swap(data_path)
+        logger.info(
+            "Index ready: %d entries built at %s",
+            len(snapshot.entries),
+            snapshot.built_at.isoformat(),
+        )
+    except Exception:  # noqa: BLE001
+        logger.exception(
+            "Startup index build failed for %s; serving empty snapshot and "
+            "continuing (scheduler will retry). /health will report entry_count=0.",
+            data_path,
+        )
 
     # Start the scheduler (only if a positive interval is configured).
     _scheduler_stop.clear()
@@ -179,6 +201,24 @@ app = FastAPI(
     version="0.6.0",
     lifespan=lifespan,
 )
+
+
+@app.exception_handler(Exception)
+async def _log_unhandled_exception(request: Request, exc: Exception) -> JSONResponse:
+    """Catch-all for unhandled request errors: log + return a clean 500.
+
+    This is the feat-007 request-error logging mechanism. ``HTTPException`` and
+    ``RequestValidationError`` are still handled by FastAPI's own handlers (they
+    are more specific and are registered first); only genuinely-unexpected
+    exceptions reach this handler. We log the full traceback (with the request
+    method/path for context) via :meth:`logging.Logger.exception` and return a
+    generic 500 JSON body so the client gets a structured error rather than a
+    bare traceback.
+    """
+    logger.exception(
+        "Unhandled error during %s %s: %s", request.method, request.url.path, exc
+    )
+    return JSONResponse(status_code=500, content={"detail": "Internal Server Error"})
 
 
 def _entry_to_out(entry: MedicalEntry) -> EntryOut:

@@ -48,7 +48,7 @@
       "name": "Configuration, Logging & Resilience",
       "description": "Add configuration via environment variables / .env (data path, refresh interval, host/port, log level) with sensible defaults. Structured logging around load, reload, and request errors. Make the service resilient: if the daily refresh fails, keep serving the last good index and log the error rather than crashing.",
       "dependencies": ["feat-006"],
-      "status": "not-started"
+      "status": "done"
     },
     {
       "id": "feat-008",

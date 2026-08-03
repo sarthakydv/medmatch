@@ -73,7 +73,14 @@ without a corresponding entry here.
 ## feat-007 — Configuration, Logging & Resilience
 | Date | Check | Command | Result |
 |---|---|---|---|
-| | | | |
+| 2026-08-03 | Verification gate | `./init.sh` | exit 0 — `117 passed` (17 config + 11 refresh + 29 api + 27 index + 16 loader + 10 model + 2 smoke), ruff check/format clean, `mypy: Success: no issues found in 10 source files` |
+| 2026-08-03 | Env→settings mapping | `MEDICAL_*` env vars set, construct `Settings()` | `data_path=/x/d.json, refresh_interval_seconds=42, host=127.0.0.1, port=9000, log_level=DEBUG, fuzzy_threshold=88.8` — all 6 `MEDICAL_*` vars map correctly |
+| 2026-08-03 | Defaults (no env) | construct `Settings()` with vars unset | `data/mock_entries.json 86400 0.0.0.0 8000 INFO 70.0` — matches ARCHITECTURE.md defaults |
+| 2026-08-03 | Startup resilience | `TestClient(app)` with `settings.data_path=/no/such/file.json` | build fails → `ERROR ... Startup index build failed ... serving empty snapshot`; `/health` → 200 `{status:ok, entry_count:0}` (app keeps running; scheduler retries) |
+| 2026-08-03 | Fuzzy threshold env→index | `MEDICAL_FUZZY_THRESHOLD=99`, `/search?q=Bukalest` | total hits 4, Bucharest hits **0** (vs 3 at default 70.0) — proves config→`build_and_swap`→`SearchIndex` |
+| 2026-08-03 | Logging idempotency | call `setup_logging()` 3x, count root handlers | handlers `0→1→1→1` (no stacking); root level INFO |
+
+**Artifacts:** `requirements.txt` — added `pydantic-settings`. `medical_app/config.py` — `Settings(BaseSettings)` with `env_prefix="MEDICAL_"`, `.env` support, fields `data_path`/`refresh_interval_seconds`(≥0)/`host`/`port`(1–65535)/`log_level`(validated, uppercased)/`fuzzy_threshold`(0–100); defaults match ARCHITECTURE.md. `medical_app/logging_config.py` (new) — idempotent `setup_logging()` (single owned StreamHandler, format `%(asctime)s %(levelname)s %(name)s %(message)s`, level from `settings.log_level`). `medical_app/api.py` — lifespan calls `setup_logging()`; initial build wrapped try/except (log + continue on failure, serving empty snapshot); global `@app.exception_handler(Exception)` logs unhandled errors → 500. `medical_app/service.py` — `_build_snapshot` passes `threshold=settings.fuzzy_threshold` into `SearchIndex`. `medical_app/main.py` — `main()` calls `setup_logging()`. `tests/test_config.py` — 17 tests (env mapping, defaults, validation errors, logging idempotency, startup resilience, threshold wiring).
 
 ## feat-008 — Containerization & Run Instructions
 | Date | Check | Command | Result |

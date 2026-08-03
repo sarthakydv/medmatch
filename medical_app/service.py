@@ -46,6 +46,7 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
 
+from medical_app.config import settings
 from medical_app.index import SearchIndex
 from medical_app.loader import LoadResult, load_entries
 from medical_app.models import MedicalEntry
@@ -215,7 +216,7 @@ def _build_snapshot(path: Path) -> IndexSnapshot:
         LoaderError: Propagated from :func:`load_entries` on structural errors.
     """
     load_result: LoadResult = load_entries(path)
-    index = SearchIndex(load_result.entries)
+    index = SearchIndex(load_result.entries, threshold=settings.fuzzy_threshold)
     return IndexSnapshot(
         index=index,
         entries=load_result.entries,
