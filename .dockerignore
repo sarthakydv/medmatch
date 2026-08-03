@@ -1,0 +1,65 @@
+# Docker build context exclusions for the Medical Entries Data Pipeline & Search API.
+# Keeps the build context small + the runtime image lean by omitting dev caches,
+# tooling, tests, and anything not needed to run the API. The synthetic mock
+# data (data/mock_entries.json) is intentionally NOT excluded — the image needs
+# it as the default data source.
+
+# --- Python caches / build artifacts ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.egg
+build/
+dist/
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Dev tooling caches ---
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# --- VCS / editor / OS ---
+.git/
+.gitignore
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# --- Tests + docs (not needed at runtime) ---
+tests/
+docs/
+
+# --- Markdown (not needed in the image; README lives in the repo) ---
+*.md
+
+# --- Project state / handoff files ---
+AGENTS.md
+feature_list.json
+progress.md
+session-handoff.md
+verification_evidence.md
+init.sh
+
+# --- Real client data / secrets (NEVER bake into an image) ---
+data/raw/
+data/*.real.json
+*.env
+.env
+
+# --- Docker artifacts (avoid recursive / stale context) ---
+Dockerfile
+docker-compose.yml
+.dockerignore
