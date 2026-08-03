@@ -1,0 +1,68 @@
+{
+  "project": "Medical Entries Data Pipeline & Search API",
+  "features": [
+    {
+      "id": "feat-001",
+      "name": "Project Bootstrap",
+      "description": "Establish the Python project skeleton: package directory, requirements.txt (runtime: fastapi, uvicorn, rapidfuzz, pydantic), requirements-dev.txt (pytest, ruff, mypy, httpx), and a runnable ./init.sh that installs deps and passes with an empty package. Goal: a fresh checkout passes ./init.sh with no manual steps.",
+      "dependencies": [],
+      "status": "not-started"
+    },
+    {
+      "id": "feat-002",
+      "name": "Mock Data Set & Schema Definition",
+      "description": "Create docs/DATA_SCHEMA.md defining the medical entry shape, and a synthetic data/mock_entries.json (~50+ entries) that intentionally includes transcription typos in location and doctor fields (e.g. 'Bukalest' for 'Bucharest', 'Dobert' for 'Robert') to exercise fuzzy search. Data must be clearly synthetic (no real PHI).",
+      "dependencies": ["feat-001"],
+      "status": "not-started"
+    },
+    {
+      "id": "feat-003",
+      "name": "JSON Loader / Data Pipeline",
+      "description": "Implement the loader module that reads the JSON dump from a configurable path, validates each entry against the schema (Pydantic model from DATA_SCHEMA), normalizes fields (strip, lowercase for indexing), and returns a typed collection. Include a module-loadable entrypoint and unit tests covering: happy path, malformed entry rejection, missing file, and empty file.",
+      "dependencies": ["feat-002"],
+      "status": "not-started"
+    },
+    {
+      "id": "feat-004",
+      "name": "In-Memory Fuzzy Search Index",
+      "description": "Build an in-memory search index over the loaded entries using rapidfuzz for typo-tolerant matching across doctor name and location fields. Support searching across multiple fields, returning ranked results by similarity score, with a configurable score threshold. Must rebuild quickly so a daily refresh is cheap. Unit tests must assert 'Bukalest' matches 'Bucharest' and 'Dobert' matches 'Robert'.",
+      "dependencies": ["feat-003"],
+      "status": "not-started"
+    },
+    {
+      "id": "feat-005",
+      "name": "FastAPI Search & Read Endpoints",
+      "description": "Expose a FastAPI app with: GET /health, GET /entries (paginated list), GET /entries/{id} (single entry), and GET /search?q=&field=&limit= (fuzzy search). The index is built once at startup and held in process memory so searches are sub-millisecond. Add request/response Pydantic schemas. Tests use FastAPI TestClient (httpx).",
+      "dependencies": ["feat-004"],
+      "status": "not-started"
+    },
+    {
+      "id": "feat-006",
+      "name": "Atomic Daily Refresh",
+      "description": "Add a scheduled loader that re-pulls the JSON dump once a day (configurable interval, default 24h) and atomically swaps the live index so concurrent searches never see a half-loaded state. Provide a way to trigger a manual reload (e.g. POST /admin/reload or a CLI command). Include a test that verifies a reload swaps the index atomically without serving partial data.",
+      "dependencies": ["feat-005"],
+      "status": "not-started"
+    },
+    {
+      "id": "feat-007",
+      "name": "Configuration, Logging & Resilience",
+      "description": "Add configuration via environment variables / .env (data path, refresh interval, host/port, log level) with sensible defaults. Structured logging around load, reload, and request errors. Make the service resilient: if the daily refresh fails, keep serving the last good index and log the error rather than crashing.",
+      "dependencies": ["feat-006"],
+      "status": "not-started"
+    },
+    {
+      "id": "feat-008",
+      "name": "Containerization & Run Instructions",
+      "description": "Add a Dockerfile (multi-stage, slim base) and a docker-compose for local run. Write README.md with: architecture summary, how to run ./init.sh, how to start the API, how to trigger a reload, and example curl queries showing fuzzy search. This is the low-maintenance deployment story.",
+      "dependencies": ["feat-007"],
+      "status": "not-started"
+    },
+    {
+      "id": "feat-009",
+      "name": "Final Verification & Handoff",
+      "description": "Run ./init.sh end-to-end, confirm all features are 'done', record evidence in verification_evidence.md, update progress.md and session-handoff.md, and ensure a fresh checkout runs cleanly. This is the closing gate before delivery.",
+      "dependencies": ["feat-008"],
+      "status": "not-started"
+    }
+  ]
+}
