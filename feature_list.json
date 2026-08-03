@@ -41,7 +41,7 @@
       "name": "Atomic Daily Refresh",
       "description": "Add a scheduled loader that re-pulls the JSON dump once a day (configurable interval, default 24h) and atomically swaps the live index so concurrent searches never see a half-loaded state. Provide a way to trigger a manual reload (e.g. POST /admin/reload or a CLI command). Include a test that verifies a reload swaps the index atomically without serving partial data.",
       "dependencies": ["feat-005"],
-      "status": "not-started"
+      "status": "done"
     },
     {
       "id": "feat-007",
