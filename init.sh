@@ -21,7 +21,7 @@ fi
 # install requirements. Skipped if requirements files are absent (early bootstrap).
 if [ ! -d .venv ] && [ -f requirements.txt ]; then
   echo "=== Creating virtualenv (.venv) ==="
-  "$PYTHON" -m venv .venv
+  "$PY" -m venv .venv
   # shellcheck disable=SC1091
   source .venv/bin/activate
   PY=python

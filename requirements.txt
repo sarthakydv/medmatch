@@ -1,0 +1,6 @@
+# Runtime dependencies for the Medical Entries Data Pipeline & Search API.
+# Pinned only where needed for compatibility; otherwise float to latest stable.
+fastapi
+uvicorn[standard]
+rapidfuzz
+pydantic
