@@ -85,7 +85,12 @@ without a corresponding entry here.
 ## feat-008 — Containerization & Run Instructions
 | Date | Check | Command | Result |
 |---|---|---|---|
-| | | | |
+| 2026-08-03 | Verification gate | `./init.sh` | exit 0 — `117 passed`, ruff check/format clean, `mypy: Success: no issues found in 10 source files` (new Docker/README files don't affect the Python gate) |
+| 2026-08-03 | Live API (README curl examples) | start `python -m medical_app.main`, curl each endpoint, then kill | `/health` → 73 entries; `/search?q=Bukalest` recovers Bucharest; `/search?q=Dobert` recovers Robert/Roberto @83.3; `/entries/ent-0001` + pagination + `POST /admin/reload` all return correct shapes |
+| 2026-08-03 | docker-compose.yml validity | `python3 -c "import yaml; yaml.safe_load(open(...))"` | valid YAML |
+| 2026-08-03 | Dockerfile structure | `grep ^FROM/^CMD/^USER/...` | multi-stage (`python:3.12-slim` builder + runtime), `USER appuser`, `EXPOSE 8000`, `CMD ["python","-m","medical_app.main"]` |
+
+**Artifacts:** `Dockerfile` — multi-stage slim build (builder installs runtime `requirements.txt` into `/opt/venv`; runtime copies venv + `medical_app/` + `data/mock_entries.json`, non-root `appuser`, `PYTHONUNBUFFERED=1`, CMD `python -m medical_app.main` so all `MEDICAL_*` env vars apply). `.dockerignore` — excludes venvs/caches/`.git`/`tests`/`docs`/`*.md`/`.env`/`data/raw`, keeps `data/mock_entries.json`. `docker-compose.yml` — service `api` (port 8000, `restart: unless-stopped`, `MEDICAL_*` env defaults, `./data:/app/data:ro` volume, `/health` healthcheck). `README.md` — architecture summary + ASCII diagram, local quick start (`./init.sh`, `python -m medical_app.main`), Docker quick start (`docker compose up --build`), full `MEDICAL_*` config table, endpoints, reload instructions, and fuzzy-search curl demos (`Bukalest`→Bucharest, `Dobert`→Robert).
 
 ## feat-009 — Final Verification & Handoff
 | Date | Check | Command | Result |

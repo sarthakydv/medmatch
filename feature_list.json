@@ -55,7 +55,7 @@
       "name": "Containerization & Run Instructions",
       "description": "Add a Dockerfile (multi-stage, slim base) and a docker-compose for local run. Write README.md with: architecture summary, how to run ./init.sh, how to start the API, how to trigger a reload, and example curl queries showing fuzzy search. This is the low-maintenance deployment story.",
       "dependencies": ["feat-007"],
-      "status": "not-started"
+      "status": "done"
     },
     {
       "id": "feat-009",

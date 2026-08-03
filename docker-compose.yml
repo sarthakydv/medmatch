@@ -1,0 +1,41 @@
+# Local Docker run for the Medical Entries Data Pipeline & Search API.
+# Builds from ./Dockerfile and serves the API on http://localhost:8000.
+# Uses the Compose spec (modern Docker Compose; no obsolete `version:` key).
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: medical-entries-api:latest
+    container_name: medical-entries-api
+    ports:
+      - "8000:8000"
+    environment:
+      # Pass through the MEDICAL_* env vars. These match the app defaults; unset
+      # any of them to rely on the image's baked-in defaults instead.
+      MEDICAL_HOST: "0.0.0.0"
+      MEDICAL_PORT: "8000"
+      MEDICAL_LOG_LEVEL: "INFO"
+      MEDICAL_REFRESH_INTERVAL_SECONDS: "86400"
+      MEDICAL_FUZZY_THRESHOLD: "70.0"
+      # By default the container uses the synthetic dump baked into the image.
+      # With the volume below, you can drop your own data/mock_entries.json (or
+      # any dump) into ./data and it will shadow the baked-in file.
+      MEDICAL_DATA_PATH: "/app/data/mock_entries.json"
+    volumes:
+      # Mount the host data dir read-only so a user can supply their own dump at
+      # runtime without rebuilding the image. Override MEDICAL_DATA_PATH above
+      # to point at a differently-named file under /app/data.
+      - ./data:/app/data:ro
+    restart: unless-stopped
+    healthcheck:
+      # Hit the liveness endpoint; a 200 means the API + index are up. Uses the
+      # Python already in the image (the slim base has no `curl` installed).
+      test:
+        - "CMD-SHELL"
+        - "python -c \"import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health').status==200 else 1)\""
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
