@@ -28,7 +28,10 @@ without a corresponding entry here.
 ## feat-002 — Mock Data Set & Schema Definition
 | Date | Check | Command | Result |
 |---|---|---|---|
-| | | | |
+| 2026-08-03 | Verification gate | `./init.sh` | exit 0 — `12 passed in 0.05s` (smoke + model tests), ruff check/format clean, `mypy: Success: no issues found in 8 source files` |
+| 2026-08-03 | Data sanity (independent) | `python3 -c "..."` over `data/mock_entries.json` | count: 73; all dicts; unique ids; `has Dobert (doctor_name): True`; `has Bukalest (location): True`; all parse via `MedicalEntry`; entries with missing/empty required fields: `[]` |
+
+**Artifacts:** `medical_app/models.py` — Pydantic v2 `MedicalEntry` (required `id`/`doctor_name`/`location` with non-empty validators; optional `specialty`/`facility`/`phone`/`notes`; `extra="allow"`, `str_strip_whitespace=True`). `data/mock_entries.json` — 73 synthetic entries (no PHI) with intentional typos (`Dobert`↔`Robert`, `Bukalest`↔`Bucharest`, plus ~12 more doctor-name and ~15 more location typos), varying optional fields and specialties. `tests/test_models.py` — 10 model validation cases.
 
 ## feat-003 — JSON Loader / Data Pipeline
 | Date | Check | Command | Result |
