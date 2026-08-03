@@ -13,7 +13,7 @@
       "name": "Mock Data Set & Schema Definition",
       "description": "Create docs/DATA_SCHEMA.md defining the medical entry shape, and a synthetic data/mock_entries.json (~50+ entries) that intentionally includes transcription typos in location and doctor fields (e.g. 'Bukalest' for 'Bucharest', 'Dobert' for 'Robert') to exercise fuzzy search. Data must be clearly synthetic (no real PHI).",
       "dependencies": ["feat-001"],
-      "status": "not-started"
+      "status": "done"
     },
     {
       "id": "feat-003",

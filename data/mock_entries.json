@@ -1,0 +1,559 @@
+[
+  {
+    "id": "ent-0001",
+    "doctor_name": "Dobert Pop",
+    "location": "Bukalest",
+    "specialty": "Cardiology",
+    "facility": "Central Clinic",
+    "phone": "+40 700 000 001",
+    "notes": "Follow-up in two weeks."
+  },
+  {
+    "id": "ent-0002",
+    "doctor_name": "Dobert Marin",
+    "location": "Bucharest",
+    "specialty": "Cardiology"
+  },
+  {
+    "id": "ent-0003",
+    "doctor_name": "Robert Ionescu",
+    "location": "Bucharest",
+    "specialty": "Neurology",
+    "facility": "University Hospital",
+    "phone": "+40 700 000 002",
+    "notes": "Family history of migraines."
+  },
+  {
+    "id": "ent-0004",
+    "doctor_name": "Roberto Smith",
+    "location": "Cluj-Napoca",
+    "phone": "+40 700 000 003",
+    "notes": "Walk-in."
+  },
+  {
+    "id": "ent-0005",
+    "doctor_name": "Dobert Kline",
+    "location": "Bucharest",
+    "specialty": "Dermatology",
+    "facility": "Skin Care Center",
+    "notes": "Photosensitivity."
+  },
+  {
+    "id": "ent-0006",
+    "doctor_name": "Robert-Adrian Vasile",
+    "location": "Bukalest",
+    "specialty": "Pediatrics",
+    "facility": "Children's Clinic",
+    "phone": "+40 700 000 004",
+    "notes": "Vaccination records on file."
+  },
+  {
+    "id": "ent-0007",
+    "doctor_name": "Maria Popescu",
+    "location": "Bukarest",
+    "specialty": "Gynecology",
+    "facility": "Women's Health Clinic",
+    "phone": "+40 700 000 005",
+    "notes": "Routine checkup."
+  },
+  {
+    "id": "ent-0008",
+    "doctor_name": "Ion Georgescu",
+    "location": "Tmisoara",
+    "specialty": "Orthopedics",
+    "facility": "Ortho Center West",
+    "notes": "Knee MRI scheduled."
+  },
+  {
+    "id": "ent-0009",
+    "doctor_name": "Elena Dumitrescu",
+    "location": "Timisoara",
+    "specialty": "Cardiology",
+    "phone": "+40 700 000 006",
+    "notes": "ECG normal."
+  },
+  {
+    "id": "ent-0010",
+    "doctor_name": "Andrei Stoica",
+    "location": "Craiova",
+    "specialty": "Neurology",
+    "facility": "South Neuro Clinic"
+  },
+  {
+    "id": "ent-0011",
+    "doctor_name": "Cristina Munteanu",
+    "location": "Craova",
+    "specialty": "Dermatology",
+    "facility": "Derm Plus",
+    "phone": "+40 700 000 007"
+  },
+  {
+    "id": "ent-0012",
+    "doctor_name": "Vlad Constantinescu",
+    "location": "Constanta",
+    "specialty": "Ophthalmology",
+    "facility": "Sea Eye Clinic",
+    "phone": "+40 700 000 008",
+    "notes": "Cataract consult."
+  },
+  {
+    "id": "ent-0013",
+    "doctor_name": "Andra Radu",
+    "location": "Constansa",
+    "specialty": "Pediatrics",
+    "notes": "Well-child visit."
+  },
+  {
+    "id": "ent-0014",
+    "doctor_name": "Tudor Irimia",
+    "location": "Iasi",
+    "specialty": "Oncology",
+    "facility": "Regional Oncology",
+    "phone": "+40 700 000 009",
+    "notes": "Staging review."
+  },
+  {
+    "id": "ent-0015",
+    "doctor_name": "Ioana Nicolae",
+    "location": "Jassy",
+    "specialty": "Endocrinology",
+    "facility": "Endo Clinic Iasi",
+    "notes": "Thyroid panel pending."
+  },
+  {
+    "id": "ent-0016",
+    "doctor_name": "Jhon Albu",
+    "location": "Bucharest",
+    "specialty": "Psychiatry",
+    "facility": "Mind Care Clinic",
+    "phone": "+40 700 000 010",
+    "notes": "Medication review."
+  },
+  {
+    "id": "ent-0017",
+    "doctor_name": "John Albu",
+    "location": "Bucharest",
+    "specialty": "Psychiatry"
+  },
+  {
+    "id": "ent-0018",
+    "doctor_name": "Michale Tanase",
+    "location": "Sibiu",
+    "specialty": "Cardiology",
+    "facility": "Heart Center Sibiu",
+    "phone": "+40 700 000 011",
+    "notes": "Stress test ordered."
+  },
+  {
+    "id": "ent-0019",
+    "doctor_name": "Michael Tanase",
+    "location": "Sibiu",
+    "specialty": "Cardiology"
+  },
+  {
+    "id": "ent-0020",
+    "doctor_name": "Emilly Voicu",
+    "location": "Brasov",
+    "specialty": "Dermatology",
+    "facility": "Derma Clinic Brasov",
+    "phone": "+40 700 000 012",
+    "notes": "Acne follow-up."
+  },
+  {
+    "id": "ent-0021",
+    "doctor_name": "Emily Voicu",
+    "location": "Brashov",
+    "specialty": "Dermatology"
+  },
+  {
+    "id": "ent-0022",
+    "doctor_name": "Sara Moldovan",
+    "location": "Oradea",
+    "specialty": "Pediatrics",
+    "facility": "Kids Care Oradea",
+    "phone": "+40 700 000 013",
+    "notes": "Growth chart updated."
+  },
+  {
+    "id": "ent-0023",
+    "doctor_name": "Sarah Moldovan",
+    "location": "Oradea",
+    "notes": "Telehealth available."
+  },
+  {
+    "id": "ent-0024",
+    "doctor_name": "Anrew Popa",
+    "location": "Cluj-Napoca",
+    "specialty": "Orthopedics",
+    "facility": "Bone & Joint Clinic",
+    "phone": "+40 700 000 014",
+    "notes": "Post-op week 3."
+  },
+  {
+    "id": "ent-0025",
+    "doctor_name": "Andrew Popa",
+    "location": "Cluj Napoca",
+    "specialty": "Orthopedics"
+  },
+  {
+    "id": "ent-0026",
+    "doctor_name": "Christpher Lupu",
+    "location": "Bucharest",
+    "specialty": "Urology",
+    "facility": "Uro Center",
+    "phone": "+40 700 000 015"
+  },
+  {
+    "id": "ent-0027",
+    "doctor_name": "Christopher Lupu",
+    "location": "Bukalest",
+    "specialty": "Urology",
+    "notes": "PSA recheck."
+  },
+  {
+    "id": "ent-0028",
+    "doctor_name": "Mihai Serban",
+    "location": "Budapest",
+    "specialty": "Gastroenterology",
+    "facility": "Danube Gastro Clinic",
+    "phone": "+36 700 000 016",
+    "notes": "Endoscopy booked."
+  },
+  {
+    "id": "ent-0029",
+    "doctor_name": "Mihaela Dragu",
+    "location": "Budapset",
+    "specialty": "Cardiology",
+    "notes": "Holter monitor."
+  },
+  {
+    "id": "ent-0030",
+    "doctor_name": "Alex Stan",
+    "location": "Prague",
+    "specialty": "Neurology",
+    "facility": "Charles Neuro Center",
+    "phone": "+420 700 000 017",
+    "notes": "EEG scheduled."
+  },
+  {
+    "id": "ent-0031",
+    "doctor_name": "Alexandra Matei",
+    "location": "Prauge",
+    "specialty": "Dermatology",
+    "facility": "Skin Lab Prague",
+    "phone": "+420 700 000 018"
+  },
+  {
+    "id": "ent-0032",
+    "doctor_name": "Bogdan Dinu",
+    "location": "Vienna",
+    "specialty": "Oncology",
+    "facility": "Vienna Cancer Center",
+    "phone": "+43 700 000 019",
+    "notes": "Care plan revision."
+  },
+  {
+    "id": "ent-0033",
+    "doctor_name": "Camelia Toma",
+    "location": "Viena",
+    "specialty": "Pediatrics",
+    "facility": "Vienna Pediatric Group",
+    "notes": "Flu shot."
+  },
+  {
+    "id": "ent-0034",
+    "doctor_name": "Dan Nistor",
+    "location": "Warsaw",
+    "specialty": "Psychiatry",
+    "facility": "Vistula Mind Clinic",
+    "phone": "+48 700 000 020",
+    "notes": "Therapy follow-up."
+  },
+  {
+    "id": "ent-0035",
+    "doctor_name": "Daniela Avram",
+    "location": "Warshaw",
+    "specialty": "Endocrinology",
+    "phone": "+48 700 000 021",
+    "notes": "Insulin titration."
+  },
+  {
+    "id": "ent-0036",
+    "doctor_name": "Petru Rusu",
+    "location": "Sofya",
+    "specialty": "Cardiology",
+    "facility": "Sofia Heart Center",
+    "phone": "+359 700 000 022",
+    "notes": "Stable."
+  },
+  {
+    "id": "ent-0037",
+    "doctor_name": "Petra Rusu",
+    "location": "Sofia",
+    "specialty": "Cardiology"
+  },
+  {
+    "id": "ent-0038",
+    "doctor_name": "Florin Mocanu",
+    "location": "Sofia",
+    "specialty": "Dermatology",
+    "facility": "Balkan Derma",
+    "phone": "+359 700 000 023",
+    "notes": "Patch test."
+  },
+  {
+    "id": "ent-0039",
+    "doctor_name": "Florina Mocanu",
+    "location": "Sofya",
+    "notes": "Teledermatology."
+  },
+  {
+    "id": "ent-0040",
+    "doctor_name": "George Olaru",
+    "location": "Belgrad",
+    "specialty": "Orthopedics",
+    "facility": "Ada Ortho Clinic",
+    "phone": "+381 700 000 024",
+    "notes": "Shoulder MRI."
+  },
+  {
+    "id": "ent-0041",
+    "doctor_name": "Gheorghe Olaru",
+    "location": "Belgrade",
+    "specialty": "Orthopedics"
+  },
+  {
+    "id": "ent-0042",
+    "doctor_name": "Horia Diaconu",
+    "location": "Zagreb",
+    "specialty": "Gastroenterology",
+    "facility": "Sava Gastro Clinic",
+    "phone": "+385 700 000 025",
+    "notes": "Ultrasound ordered."
+  },
+  {
+    "id": "ent-0043",
+    "doctor_name": "Hora Diaconu",
+    "location": "Zagreb",
+    "notes": "Diet plan."
+  },
+  {
+    "id": "ent-0044",
+    "doctor_name": "Ioan Pavel",
+    "location": "Krakow",
+    "specialty": "Urology",
+    "facility": "Old Town Urology",
+    "phone": "+48 700 000 026",
+    "notes": "Kidney stone follow-up."
+  },
+  {
+    "id": "ent-0045",
+    "doctor_name": "Ioana Pavel",
+    "location": "Krako",
+    "specialty": "Urology"
+  },
+  {
+    "id": "ent-0046",
+    "doctor_name": "Laurentiu Barbu",
+    "location": "Munich",
+    "specialty": "Ophthalmology",
+    "facility": "Bavaria Eye Clinic",
+    "phone": "+49 700 000 027",
+    "notes": "Glaucoma screening."
+  },
+  {
+    "id": "ent-0047",
+    "doctor_name": "Laura Barbu",
+    "location": "Munchen",
+    "specialty": "Ophthalmology",
+    "phone": "+49 700 000 028",
+    "notes": "Refraction test."
+  },
+  {
+    "id": "ent-0048",
+    "doctor_name": "Maria Ene",
+    "location": "Bucharest",
+    "specialty": "Cardiology"
+  },
+  {
+    "id": "ent-0049",
+    "doctor_name": "Mihai Ene",
+    "location": "Bucharest"
+  },
+  {
+    "id": "ent-0050",
+    "doctor_name": "Ana Colea",
+    "location": "Cluj-Napoca"
+  },
+  {
+    "id": "ent-0051",
+    "doctor_name": "Andrei Colea",
+    "location": "Cluj-Napoca",
+    "specialty": "Neurology"
+  },
+  {
+    "id": "ent-0052",
+    "doctor_name": "Jsoep Kovacs",
+    "location": "Bucharest",
+    "specialty": "Cardiology",
+    "facility": "Carpathian Heart",
+    "phone": "+40 700 000 029",
+    "notes": "Echocardiogram."
+  },
+  {
+    "id": "ent-0053",
+    "doctor_name": "Joseph Kovacs",
+    "location": "Bucharest",
+    "specialty": "Cardiology"
+  },
+  {
+    "id": "ent-0054",
+    "doctor_name": "Willaim Nagy",
+    "location": "Tmisoara",
+    "specialty": "Pediatrics",
+    "facility": "West Pediatric",
+    "phone": "+40 700 000 030",
+    "notes": "Vaccination."
+  },
+  {
+    "id": "ent-0055",
+    "doctor_name": "William Nagy",
+    "location": "Timisoara",
+    "specialty": "Pediatrics"
+  },
+  {
+    "id": "ent-0056",
+    "doctor_name": "Katherine Toth",
+    "location": "Sibiu",
+    "specialty": "Dermatology",
+    "facility": "Transylvania Derma",
+    "phone": "+40 700 000 031",
+    "notes": "Mole mapping."
+  },
+  {
+    "id": "ent-0057",
+    "doctor_name": "Katherin Toth",
+    "location": "Sibiu",
+    "specialty": "Dermatology"
+  },
+  {
+    "id": "ent-0058",
+    "doctor_name": "Stephan Suciu",
+    "location": "Brasov",
+    "specialty": "Orthopedics",
+    "facility": "Carpathian Ortho",
+    "phone": "+40 700 000 032",
+    "notes": "Fracture clinic."
+  },
+  {
+    "id": "ent-0059",
+    "doctor_name": "Steven Suciu",
+    "location": "Brasov",
+    "specialty": "Orthopedics"
+  },
+  {
+    "id": "ent-0060",
+    "doctor_name": "Margareta Ilie",
+    "location": "Iasi",
+    "specialty": "Psychiatry",
+    "facility": "Moldova Mind Clinic",
+    "phone": "+40 700 000 033",
+    "notes": "Anxiety management."
+  },
+  {
+    "id": "ent-0061",
+    "doctor_name": "Margaret Ilie",
+    "location": "Iasi",
+    "specialty": "Psychiatry"
+  },
+  {
+    "id": "ent-0062",
+    "doctor_name": "Richrad Manea",
+    "location": "Constanta",
+    "specialty": "Urology",
+    "facility": "Black Sea Urology",
+    "phone": "+40 700 000 034"
+  },
+  {
+    "id": "ent-0063",
+    "doctor_name": "Richard Manea",
+    "location": "Constanta",
+    "specialty": "Urology",
+    "notes": "Telehealth."
+  },
+  {
+    "id": "ent-0064",
+    "doctor_name": "Benjmin Gheorghe",
+    "location": "Craiova",
+    "specialty": "Oncology",
+    "facility": "South Oncology",
+    "phone": "+40 700 000 035",
+    "notes": "Treatment review."
+  },
+  {
+    "id": "ent-0065",
+    "doctor_name": "Benjamin Gheorghe",
+    "location": "Craiova",
+    "specialty": "Oncology"
+  },
+  {
+    "id": "ent-0066",
+    "doctor_name": "Ovidiu Roman",
+    "location": "Bukalest",
+    "specialty": "Endocrinology",
+    "facility": "Capital Endo",
+    "phone": "+40 700 000 036",
+    "notes": "Thyroid ultrasound."
+  },
+  {
+    "id": "ent-0067",
+    "doctor_name": "Olimpia Roman",
+    "location": "Bucharest",
+    "specialty": "Endocrinology"
+  },
+  {
+    "id": "ent-0068",
+    "doctor_name": "Sebastian Hossu",
+    "location": "Tmisoara",
+    "specialty": "ENT",
+    "facility": "West ENT Clinic",
+    "phone": "+40 700 000 037",
+    "notes": "Hearing test."
+  },
+  {
+    "id": "ent-0069",
+    "doctor_name": "Sorina Hossu",
+    "location": "Timisoara",
+    "specialty": "ENT"
+  },
+  {
+    "id": "ent-0070",
+    "doctor_name": "Thomas Baltatu",
+    "location": "Cluj-Napoca",
+    "specialty": "Rheumatology",
+    "facility": "Carpathian Rheuma",
+    "phone": "+40 700 000 038",
+    "notes": "Joint assessment."
+  },
+  {
+    "id": "ent-0071",
+    "doctor_name": "Thoms Baltatu",
+    "location": "Cluj Napoca",
+    "specialty": "Rheumatology"
+  },
+  {
+    "id": "ent-0072",
+    "doctor_name": "Victoria Dumitru",
+    "location": "Bukarest",
+    "specialty": "Gastroenterology",
+    "facility": "Capital Gastro",
+    "phone": "+40 700 000 039",
+    "notes": "Colonoscopy booked."
+  },
+  {
+    "id": "ent-0073",
+    "doctor_name": "Victor Dumitru",
+    "location": "Bucharest",
+    "specialty": "Gastroenterology"
+  }
+]
