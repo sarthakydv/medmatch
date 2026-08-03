@@ -27,7 +27,7 @@
       "name": "In-Memory Fuzzy Search Index",
       "description": "Build an in-memory search index over the loaded entries using rapidfuzz for typo-tolerant matching across doctor name and location fields. Support searching across multiple fields, returning ranked results by similarity score, with a configurable score threshold. Must rebuild quickly so a daily refresh is cheap. Unit tests must assert 'Bukalest' matches 'Bucharest' and 'Dobert' matches 'Robert'.",
       "dependencies": ["feat-003"],
-      "status": "not-started"
+      "status": "done"
     },
     {
       "id": "feat-005",
