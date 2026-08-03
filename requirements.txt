@@ -4,3 +4,4 @@ fastapi
 uvicorn[standard]
 rapidfuzz
 pydantic
+pydantic-settings
