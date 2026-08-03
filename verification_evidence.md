@@ -63,7 +63,12 @@ without a corresponding entry here.
 ## feat-006 — Atomic Daily Refresh
 | Date | Check | Command | Result |
 |---|---|---|---|
-| | | | |
+| 2026-08-03 | Verification gate | `./init.sh` | exit 0 — `100 passed` (11 refresh + 29 api + 27 index + 16 loader + 10 model + 2 smoke), ruff check/format clean, `mypy: Success: no issues found in 9 source files` |
+| 2026-08-03 | Atomic swap + resilience (independent, TestClient+service) | `build_and_swap(good)` then `build_and_swap('/no/such/file')` | swap → new snapshot object, `len(entries)==index.size` (consistent); missing-path reload → raises `LoaderError`, `get_live_snapshot() is snap_v2` unchanged. `/admin/reload` → `{reloaded:true, entry_count:73, built_at, skipped, total}` and `built_at` advances. |
+| 2026-08-03 | Scheduler thread lifecycle | enumerate threads during/after lifespan | `medical-app-refresh` thread present during lifespan, gone after exit (no leak). |
+| 2026-08-03 | Flakiness check | run timing-sensitive tests 4x | `3 passed` each run — stable, no flakiness. |
+
+**Artifacts:** `medical_app/service.py` — `build_and_swap(data_path)`: builds the new `IndexSnapshot` fully (load + `SearchIndex`) off to the side, then under `_swap_lock` performs the single assignment `_live_snapshot = new` (GIL-atomic; snapshot is frozen+slotted → readers see old-or-new, never partial); on loader/index error the exception propagates BEFORE the lock so the live snapshot is untouched (keep-last-good). `IndexSnapshot` gained `skipped`/`total`. `medical_app/api.py` — lifespan now does the initial build via `build_and_swap` AND starts a daemon `medical-app-refresh` thread loop (interval = `settings.refresh_interval_seconds`; `Event.wait` so shutdown wakes it; swallows per-reload errors; stopped+joined in a `finally`); added `POST /admin/reload` (200 with `ReloadResponse`: success `{reloaded:true, entry_count, built_at, skipped, total}` or failure `{reloaded:false, ..., error}` — live index left intact). `medical_app/schemas.py` — added `ReloadResponse`. `tests/test_refresh.py` — 11 tests: atomic-swap-never-partial (concurrent reader sampling), reload-picks-up-changed-data, failure/malformed/missing keeps live index, `/admin/reload` success+failure, scheduler starts/stops with lifespan (no leak), scheduler disabled when interval=0, scheduler fires on interval.
 
 ## feat-007 — Configuration, Logging & Resilience
 | Date | Check | Command | Result |

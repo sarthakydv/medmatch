@@ -131,11 +131,52 @@ class ErrorResponse(BaseModel):
     detail: str = Field(..., description="Human-readable error detail.")
 
 
+class ReloadResponse(BaseModel):
+    """Outcome payload for ``POST /admin/reload`` (feat-006 manual reload).
+
+    The endpoint always responds with HTTP 200 so callers get a clean JSON body
+    whether the reload succeeded or failed; the ``reloaded`` boolean is the
+    authoritative signal. On success the body carries the new snapshot's
+    summary fields; on failure it carries an ``error`` string and the live
+    index is left untouched (the last good snapshot keeps serving).
+
+    Attributes:
+        reloaded: ``True`` if a fresh snapshot was built and published; ``False``
+            if the reload failed and the live index is unchanged.
+        entry_count: Number of entries in the new snapshot (0 on failure).
+        built_at: ISO 8601 UTC timestamp the new snapshot was built at (empty
+            string on failure).
+        skipped: Number of entries dropped during the load (validation failures
+            / duplicate ids). 0 on failure.
+        total: Total raw records read from the dump. 0 on failure.
+        error: Human-readable error detail when ``reloaded`` is ``False``;
+            ``None`` on success.
+    """
+
+    reloaded: bool = Field(..., description="True if the reload published a new index.")
+    entry_count: int = Field(
+        default=0, description="Entries in the new snapshot (0 on failure)."
+    )
+    built_at: str = Field(
+        default="",
+        description=(
+            "ISO 8601 UTC build timestamp of the new snapshot (empty on failure)."
+        ),
+    )
+    skipped: int = Field(default=0, description="Entries skipped during the load.")
+    total: int = Field(default=0, description="Total raw records read from the dump.")
+    error: str | None = Field(
+        default=None,
+        description="Error detail when reloaded is False; None on success.",
+    )
+
+
 __all__ = [
     "EntriesListResponse",
     "EntryOut",
     "ErrorResponse",
     "HealthResponse",
+    "ReloadResponse",
     "SearchHit",
     "SearchResponse",
 ]
