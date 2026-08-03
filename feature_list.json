@@ -6,7 +6,7 @@
       "name": "Project Bootstrap",
       "description": "Establish the Python project skeleton: package directory, requirements.txt (runtime: fastapi, uvicorn, rapidfuzz, pydantic), requirements-dev.txt (pytest, ruff, mypy, httpx), and a runnable ./init.sh that installs deps and passes with an empty package. Goal: a fresh checkout passes ./init.sh with no manual steps.",
       "dependencies": [],
-      "status": "not-started"
+      "status": "done"
     },
     {
       "id": "feat-002",

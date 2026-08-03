@@ -19,7 +19,11 @@ without a corresponding entry here.
 ## feat-001 — Project Bootstrap
 | Date | Check | Command | Result |
 |---|---|---|---|
-| | | | |
+| 2026-08-03 | Fresh-checkout gate | `env -u PYTHON ./init.sh` (clean copy, no `.PYTHON`/`.venv`) | exit 0 — created venv, installed runtime+dev deps, `compileall` clean, `1 passed in 0.01s`, ruff check/format pass, `mypy: Success: no issues found in 8 source files`, "Verification Complete" |
+| 2026-08-03 | In-repo gate | `./init.sh` | exit 0 — all checks pass (same suite as above) |
+| 2026-08-03 | init.sh bug fix | edited `init.sh:24` `"$PYTHON"` → `"$PY"` | Fresh-checkout run previously failed `./init.sh: line 24: : command not found` (exit 127); now exits 0. Required for feat-001's "fresh checkout passes ./init.sh with no manual steps" goal. |
+
+**Artifacts created:** `requirements.txt` (fastapi, uvicorn[standard], rapidfuzz, pydantic), `requirements-dev.txt` (pytest, ruff, mypy, httpx), `pyproject.toml` (ruff py311 E/F/I/W/UP/B; mypy strict), `medical_app/` package (8 typed stub modules), `tests/` (smoke test).
 
 ## feat-002 — Mock Data Set & Schema Definition
 | Date | Check | Command | Result |

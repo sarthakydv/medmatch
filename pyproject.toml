@@ -1,0 +1,46 @@
+# Project configuration for the Medical Entries Data Pipeline & Search API.
+# Tooling only (ruff + mypy). Dependencies live in requirements*.txt and are
+# installed by init.sh.
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+extend-exclude = [
+    ".venv",
+    "venv",
+    "build",
+    "dist",
+]
+
+[tool.ruff.lint]
+# A sensible default rule set: pyflakes (F), pycodestyle (E/W), import sorting (I),
+# and a few common-sense groups. Keep additions conservative so stubs stay clean.
+select = ["E", "F", "I", "W", "UP", "B"]
+# Allow re-export via `__all__` patterns and star imports inside `__init__` if needed.
+ignore = []
+
+[tool.ruff.lint.per-file-ignores]
+# Tests don't need docstrings on every helper.
+"tests/*" = []
+
+[tool.ruff.format]
+# Defaults are fine; init.sh runs `ruff format --check .`.
+
+[tool.mypy]
+python_version = "3.11"
+# Target the package only (init.sh runs `mypy medical_app`).
+packages = ["medical_app"]
+strict = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+no_implicit_optional = true
+# Treat missing imports (third-party libs without stubs) as errors is too strict
+# for a bootstrap; the stubs here import only well-typed libs (pydantic, fastapi,
+# uvicorn, rapidfuzz). If a lib lacks stubs later, add per-module overrides.
+ignore_missing_imports = false
+
+[[tool.mypy.overrides]]
+# rapidfuzz ships typed access but historically has gaps; keep it lenient so the
+# index stub (feat-004) compiles cleanly today.
+module = "rapidfuzz.*"
+ignore_missing_imports = true

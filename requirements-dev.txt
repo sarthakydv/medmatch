@@ -1,0 +1,6 @@
+# Development / test / lint dependencies.
+# Installed by init.sh in addition to requirements.txt.
+pytest
+ruff
+mypy
+httpx
