@@ -36,7 +36,12 @@ without a corresponding entry here.
 ## feat-003 — JSON Loader / Data Pipeline
 | Date | Check | Command | Result |
 |---|---|---|---|
-| | | | |
+| 2026-08-03 | Verification gate | `./init.sh` | exit 0 — `33 passed in 0.13s` (16 loader + 10 model + 2 smoke + parametrized), ruff check/format clean, `mypy: Success: no issues found in 8 source files` |
+| 2026-08-03 | Module entrypoint | `python3 -m medical_app.loader` | `Loaded 73/73 entries from data/mock_entries.json (skipped 0).` |
+| 2026-08-03 | Resilience (manual) | tmp JSON: 2 valid + empty doctor_name + empty id + dup id | `entries loaded: 2 / total: 5 / skipped: 3`, ids kept `['a','d']`; each skip logged; load did not abort |
+| 2026-08-03 | Error cases (manual) | missing path / empty file | missing file → `raised LoaderError`; empty file → `loaded: 0 skipped: 0` |
+
+**Artifacts:** `medical_app/loader.py` — `load_entries(path)` validating against `MedicalEntry`, enforcing `id` uniqueness; frozen+slotted `LoadResult(entries, skipped, total)` with derived `loaded`; `LoaderError` for structural errors (missing file, unreadable, malformed JSON, top-level not a list); malformed entries & duplicate ids skipped+counted+logged (resilience over strictness); empty file / `[]` → valid empty result; `normalized_text(entry)` lowercased searchable text; `__main__` entrypoint. `tests/test_loader.py` — 16 tests covering happy path, malformed-entry rejection (skip+count, no abort), missing file, empty file, `[]`, non-list JSON, malformed JSON, duplicate id.
 
 ## feat-004 — In-Memory Fuzzy Search Index
 | Date | Check | Command | Result |

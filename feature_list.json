@@ -20,7 +20,7 @@
       "name": "JSON Loader / Data Pipeline",
       "description": "Implement the loader module that reads the JSON dump from a configurable path, validates each entry against the schema (Pydantic model from DATA_SCHEMA), normalizes fields (strip, lowercase for indexing), and returns a typed collection. Include a module-loadable entrypoint and unit tests covering: happy path, malformed entry rejection, missing file, and empty file.",
       "dependencies": ["feat-002"],
-      "status": "not-started"
+      "status": "done"
     },
     {
       "id": "feat-004",
