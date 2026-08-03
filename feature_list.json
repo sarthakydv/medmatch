@@ -62,7 +62,7 @@
       "name": "Final Verification & Handoff",
       "description": "Run ./init.sh end-to-end, confirm all features are 'done', record evidence in verification_evidence.md, update progress.md and session-handoff.md, and ensure a fresh checkout runs cleanly. This is the closing gate before delivery.",
       "dependencies": ["feat-008"],
-      "status": "not-started"
+      "status": "done"
     }
   ]
 }

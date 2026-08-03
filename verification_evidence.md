@@ -95,4 +95,10 @@ without a corresponding entry here.
 ## feat-009 — Final Verification & Handoff
 | Date | Check | Command | Result |
 |---|---|---|---|
-| | | | |
+| 2026-08-03 | Repo gate (end-to-end) | `./init.sh` | exit 0 — `117 passed, 1 warning in 1.97s`, ruff check/format clean, `mypy: Success: no issues found in 10 source files`, "Verification Complete" |
+| 2026-08-03 | Fresh-checkout simulation | copy repo (exclude `.venv`/`.git`/caches); `env -u PYTHON ./init.sh` | exit 0 — same suite passes on a clean copy with no venv and no `PYTHON` env var (creates venv, installs deps, runs all checks); 117 passed |
+| 2026-08-03 | Feature status | all entries in `feature_list.json` | all 9 features `done` |
+| 2026-08-03 | Dead code / TODO scan | `grep -rn "TODO\|FIXME\|XXX\|NotImplemented\|pass  #"` in `medical_app/` + `tests/` | none found |
+| 2026-08-03 | Handoff docs | `progress.md`, `session-handoff.md` | both updated to reflect the complete, restartable delivery |
+
+**Outcome:** The project is delivered. `git clone` → `./init.sh` → `python -m medical_app.main` (or `docker compose up --build`) works with no manual steps. All success criteria from `docs/PRODUCT.md` met: `/search?q=Bukalest` returns Bucharest entries; `/search?q=Dobert` returns Robert entries; `/entries` + `/entries/{id}` work; `/health` reports liveness + freshness; daily reload swaps atomically; failed reload keeps the last good index; `./init.sh` passes end-to-end from a clean checkout.
