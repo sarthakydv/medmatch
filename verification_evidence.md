@@ -46,7 +46,11 @@ without a corresponding entry here.
 ## feat-004 — In-Memory Fuzzy Search Index
 | Date | Check | Command | Result |
 |---|---|---|---|
-| | | | |
+| 2026-08-03 | Verification gate | `./init.sh` | exit 0 — `60 passed in 0.10s` (27 index + 16 loader + 10 model + 2 smoke + parametrized), ruff check/format clean, `mypy: Success: no issues found in 8 source files` |
+| 2026-08-03 | Critical typo tests | `pytest tests/test_index.py::test_bukalest_matches_bucharest test_dobert_matches_robert -v` | `2 passed` |
+| 2026-08-03 | Typo-bridging (independent) | `SearchIndex(load_entries(...).entries).search("Bukalest"/"Dobert")` | `Bukalest` → Bucharest entries (ent-0002/0003/0005 @ 70.59); `Dobert` → Robert doctors (ent-0003/0004/0006 @ 83.33) |
+
+**Artifacts:** `medical_app/index.py` — `SearchIndex(entries, *, threshold=70.0)` indexing lowercased `doctor_name`/`location`/`specialty`; `search(query, *, field=None, limit=10, threshold=None) -> list[SearchResult]`; scorer `max(fuzz.partial_ratio, fuzz.token_sort_ratio)` (handles both substring + transposition typos); ranking by `(-score, entry.id)` for determinism; empty query → `[]`; O(N) build for cheap daily rebuild; immutable instance suitable for atomic swap. `SearchResult` frozen+slotted dataclass (`entry`, `score`, `field`). `tests/test_index.py` — 27 tests incl. the required Bukalest→Bucharest and Dobert→Robert bridging, plus ranking/threshold/field/limit/determinism/empty-query cases.
 
 ## feat-005 — FastAPI Search & Read Endpoints
 | Date | Check | Command | Result |
