@@ -55,7 +55,10 @@ without a corresponding entry here.
 ## feat-005 — FastAPI Search & Read Endpoints
 | Date | Check | Command | Result |
 |---|---|---|---|
-| | | | |
+| 2026-08-03 | Verification gate | `./init.sh` | exit 0 — `89 passed` (29 api + 27 index + 16 loader + 10 model + 2 smoke), ruff check/format clean, `mypy: Success: no issues found in 9 source files` |
+| 2026-08-03 | End-to-end (TestClient, lifespan) | `with TestClient(app) as c: c.get(...)` | `/health` → `{status:ok, index_built_at:<ISO UTC>, entry_count:73}`; `/search?q=Bukalest` → Bucharest hits ent-0002/0003/0005 @70.6; `/search?q=Dobert` → Robert hits ent-0003/0004/0006 @83.3; `/entries/ent-0001` → 200; `/entries/nope` → 404; `/entries?limit=3` → ids ent-0001/0002/0003; unknown `field` → 422 |
+
+**Artifacts:** `medical_app/schemas.py` (new) — Pydantic v2 response models (`EntryOut`, `SearchHit`, `SearchResponse`, `EntriesListResponse`, `HealthResponse`, `ErrorResponse`). `medical_app/api.py` — four endpoints (`GET /health`, `GET /entries?limit=&offset=`, `GET /entries/{id}`, `GET /search?q=&field=&limit=`) with `response_model` annotations + a `lifespan` handler that builds the `SearchIndex` once at startup from `settings.data_path`. `medical_app/service.py` — minimal `IndexSnapshot(index, entries, built_at)` + `get_live_snapshot()`/`set_live_snapshot()` (single assignment; atomic-swap/scheduler deferred to feat-006). `tests/test_api.py` — 29 TestClient tests incl. the PRODUCT.md Bukalest→Bucharest and Dobert→Robert success criteria, pagination, 404, and 422 validation.
 
 ## feat-006 — Atomic Daily Refresh
 | Date | Check | Command | Result |

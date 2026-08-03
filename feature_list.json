@@ -34,7 +34,7 @@
       "name": "FastAPI Search & Read Endpoints",
       "description": "Expose a FastAPI app with: GET /health, GET /entries (paginated list), GET /entries/{id} (single entry), and GET /search?q=&field=&limit= (fuzzy search). The index is built once at startup and held in process memory so searches are sub-millisecond. Add request/response Pydantic schemas. Tests use FastAPI TestClient (httpx).",
       "dependencies": ["feat-004"],
-      "status": "not-started"
+      "status": "done"
     },
     {
       "id": "feat-006",
